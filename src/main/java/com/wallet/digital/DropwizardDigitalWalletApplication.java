@@ -1,12 +1,23 @@
 package com.wallet.digital;
 
+import com.wallet.digital.db.dao.AccountDAO;
+import com.wallet.digital.db.dao.AccountMemoryDAO;
+import com.wallet.digital.health.DigitalWalletHealthCheck;
+import com.wallet.digital.resources.AccountResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DropwizardDigitalWalletApplication extends Application<DropwizardDigitalWalletConfiguration> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DropwizardDigitalWalletApplication.class);
+
     public static void main(final String[] args) throws Exception {
+        LOGGER.info("Starting Digital Wallet application...");
         new DropwizardDigitalWalletApplication().run(args);
     }
 
@@ -17,13 +28,21 @@ public class DropwizardDigitalWalletApplication extends Application<DropwizardDi
 
     @Override
     public void initialize(final Bootstrap<DropwizardDigitalWalletConfiguration> bootstrap) {
-        // TODO: application initialization
+        bootstrap.addBundle(new SwaggerBundle<DropwizardDigitalWalletConfiguration>() {
+            @Override
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(
+                    final DropwizardDigitalWalletConfiguration dropwizardDigitalWalletConfiguration) {
+                return dropwizardDigitalWalletConfiguration.getSwaggerBundleConfiguration();
+            }
+        });
     }
 
     @Override
     public void run(final DropwizardDigitalWalletConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+        environment.jersey().register(new AccountResource(new AccountMemoryDAO()));
+        environment.healthChecks().register("DigitalWalletHealthCheck",
+                new DigitalWalletHealthCheck());
     }
 
 }

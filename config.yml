@@ -2,3 +2,27 @@ logging:
   level: INFO
   loggers:
     com.wallet.digital: DEBUG
+
+server:
+  maxThreads: 512
+  applicationContextPath: /dropwizard-digital-wallet
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8081
+
+swagger:
+  basePath: /dropwizard-digital-wallet
+  resourcePackage: com.wallet.digital.resources
+  scan: true
+  info:
+    version: "1.0.0"
+    title: "Digital Wallet API"
+    description: "A simple API used for expose CRUD operation on MongoDB collection"
+    termsOfService: "http://swagger.io/terms/"
+    contact:
+      name: "Kunwardeep Singh"
+    license:
+      name: "Kunwardeep Singh"
