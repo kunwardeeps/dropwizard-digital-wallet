@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 public class TransactionMemoryDAO implements TransactionDAO {
 
     private Map<UUID, TransactionDTO> map = new ConcurrentHashMap<>();
+    private static TransactionMemoryDAO dao;
+
+    private TransactionMemoryDAO() {}
 
     @Override
     public TransactionDTO createTransaction(TransactionDTO transactionDTO) {
@@ -22,9 +25,16 @@ public class TransactionMemoryDAO implements TransactionDAO {
     public List<TransactionDTO> getTransactionsByAccId(String accoundId) {
         List<TransactionDTO> transactionDTOList = map.entrySet()
                 .stream()
-                .filter(e -> (e.getValue().getFrom().equals(accoundId) || e.getValue().getTo().equals(accoundId)))
+                .filter(e -> (e.getValue().getFrom().toString().equals(accoundId) || e.getValue().getTo().toString().equals(accoundId)))
                 .map(e -> e.getValue())
                 .collect(Collectors.toList());
         return transactionDTOList;
+    }
+
+    public static TransactionMemoryDAO getInstance() {
+        if (dao == null) {
+            dao = new TransactionMemoryDAO();
+        }
+        return dao;
     }
 }

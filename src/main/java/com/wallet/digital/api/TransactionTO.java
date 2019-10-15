@@ -7,7 +7,7 @@ public class TransactionTO {
 
     private UUID from;
     private UUID to;
-    private long amount;
+    private double amount;
 
     public UUID getFrom() {
         return from;
@@ -25,11 +25,11 @@ public class TransactionTO {
         this.to = to;
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 }

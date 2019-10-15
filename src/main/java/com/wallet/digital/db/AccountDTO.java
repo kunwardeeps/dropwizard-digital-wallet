@@ -8,7 +8,7 @@ public class AccountDTO {
 
     private String name;
     private UUID id;
-    private long balance;
+    private double balance;
     private Date dateCreated;
 
     public String getName() {
@@ -27,11 +27,11 @@ public class AccountDTO {
         this.id = id;
     }
 
-    public long getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(long balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 

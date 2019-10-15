@@ -11,5 +11,9 @@ public interface AccountDAO {
 
     AccountDTO getAccountDetails(String id);
 
+    public AccountDTO deposit(String accountId, double amount);
+
+    public AccountDTO withdraw(String accountId, double amount);
+
     List<AccountDTO> getAll();
 }

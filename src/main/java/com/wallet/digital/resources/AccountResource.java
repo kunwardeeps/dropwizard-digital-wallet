@@ -34,9 +34,6 @@ public class AccountResource {
 
     private AccountDAO accountDAO;
 
-    /**
-     * Constructor.
-     */
     public AccountResource(final AccountDAO accountDAO) {
         this.accountDAO = accountDAO;
     }

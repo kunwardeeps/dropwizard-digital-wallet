@@ -8,7 +8,7 @@ public class TransactionDTO {
     private UUID transactionID;
     private UUID from;
     private UUID to;
-    private long amount;
+    private double amount;
     private Date dateCreated;
 
     public UUID getFrom() {
@@ -27,11 +27,11 @@ public class TransactionDTO {
         this.to = to;
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

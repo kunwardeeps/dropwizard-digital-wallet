@@ -2,8 +2,10 @@ package com.wallet.digital;
 
 import com.wallet.digital.db.dao.AccountDAO;
 import com.wallet.digital.db.dao.AccountMemoryDAO;
+import com.wallet.digital.db.dao.TransactionMemoryDAO;
 import com.wallet.digital.health.DigitalWalletHealthCheck;
 import com.wallet.digital.resources.AccountResource;
+import com.wallet.digital.resources.TransactionResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -40,7 +42,8 @@ public class DropwizardDigitalWalletApplication extends Application<DropwizardDi
     @Override
     public void run(final DropwizardDigitalWalletConfiguration configuration,
                     final Environment environment) {
-        environment.jersey().register(new AccountResource(new AccountMemoryDAO()));
+        environment.jersey().register(new AccountResource(AccountMemoryDAO.getInstance()));
+        environment.jersey().register(new TransactionResource(AccountMemoryDAO.getInstance(), TransactionMemoryDAO.getInstance()));
         environment.healthChecks().register("DigitalWalletHealthCheck",
                 new DigitalWalletHealthCheck());
     }

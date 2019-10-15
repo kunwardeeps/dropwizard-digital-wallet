@@ -4,7 +4,7 @@ public class AccountTO {
 
     private String name;
 
-    private long initialAmount;
+    private double initialAmount;
 
     public String getName() {
         return name;
@@ -14,11 +14,11 @@ public class AccountTO {
         this.name = name;
     }
 
-    public long getInitialAmount() {
+    public double getInitialAmount() {
         return initialAmount;
     }
 
-    public void setInitialAmount(long initialAmount) {
+    public void setInitialAmount(double initialAmount) {
         this.initialAmount = initialAmount;
     }
 }
