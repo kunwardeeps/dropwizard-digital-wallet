@@ -5,6 +5,7 @@ import java.util.UUID;
 
 public class TransactionDTO {
 
+    private UUID transactionID;
     private UUID from;
     private UUID to;
     private long amount;
@@ -40,5 +41,13 @@ public class TransactionDTO {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public UUID getTransactionID() {
+        return transactionID;
+    }
+
+    public void setTransactionID(UUID transactionID) {
+        this.transactionID = transactionID;
     }
 }
