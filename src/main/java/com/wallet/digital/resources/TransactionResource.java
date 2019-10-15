@@ -9,10 +9,7 @@ import com.wallet.digital.db.dao.AccountDAO;
 import com.wallet.digital.db.dao.TransactionDAO;
 import com.wallet.digital.resources.utils.ResponseCodeEnum;
 import com.wallet.digital.resources.utils.Utils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,8 +48,10 @@ public class TransactionResource {
      * @return An object {@link Response} with the information of result this method.
      */
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Account created!")
+            @ApiResponse(code = 201, message = "Account created!"),
+            @ApiResponse(code = 400, message = "Bad Request")
     })
+    @ApiOperation(value = "Transfer money and create a transaction")
     @POST
     @Path("/transfer")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -60,6 +59,13 @@ public class TransactionResource {
         TransactionDTO transactionDTO = null;
         synchronized (this) {
             AccountDTO fromAccount = accountDAO.getAccountDetails(transactionTO.getFrom().toString());
+            AccountDTO toAccount = accountDAO.getAccountDetails(transactionTO.getTo().toString());
+            if (fromAccount == null) {
+                return Response.status(Response.Status.BAD_REQUEST).entity(new ResponseTO(ResponseCodeEnum.INVALID_ACCOUNT_ID)).build();
+            }
+            if (toAccount == null) {
+                return Response.status(Response.Status.BAD_REQUEST).entity(new ResponseTO(ResponseCodeEnum.INVALID_RECEIVER_ACCOUNT_ID)).build();
+            }
             if (fromAccount.getBalance() < transactionTO.getAmount()) {
                 return Response.status(Response.Status.BAD_REQUEST).entity(new ResponseTO(ResponseCodeEnum.INSUFFICIENT_FUNDS)).build();
             }
@@ -76,8 +82,10 @@ public class TransactionResource {
      * @return A object {@link Response} with the information of result this method.
      */
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Operation success.")
+            @ApiResponse(code = 200, message = "Operation success."),
+            @ApiResponse(code = 404, message = "Transactions not found")
     })
+    @ApiOperation(value = "List all transactions involving a given account")
     @GET
     @Path("/account/{id}")
     public Response getTransactionsByAccId(@ApiParam(value = "id") @PathParam("id") @NotNull final String id) {
@@ -89,6 +97,4 @@ public class TransactionResource {
         }
         return Response.ok(transactions).build();
     }
-
-
 }

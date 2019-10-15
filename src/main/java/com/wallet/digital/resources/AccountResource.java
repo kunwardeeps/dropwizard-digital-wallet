@@ -12,10 +12,7 @@ import com.wallet.digital.db.dao.AccountDAO;
 
 import com.wallet.digital.resources.utils.ResponseCodeEnum;
 import com.wallet.digital.resources.utils.Utils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +42,7 @@ public class AccountResource {
      * @param id the identifier.
      * @return A object {@link Response} with the information of result this method.
      */
+    @ApiOperation(value = "Get account details using account ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Operation success."),
             @ApiResponse(code = 404, message = "Account not found")
@@ -68,6 +66,7 @@ public class AccountResource {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Operation success.")
     })
+    @ApiOperation(value = "Get all accounts as list")
     @GET
     @Path("/all")
     public Response all() {
@@ -89,6 +88,7 @@ public class AccountResource {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Account created!")
     })
+    @ApiOperation(value = "Create account")
     @POST
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
