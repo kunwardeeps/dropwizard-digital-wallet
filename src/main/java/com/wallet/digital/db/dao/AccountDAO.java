@@ -9,5 +9,7 @@ public interface AccountDAO {
 
     public AccountDTO createAccount(AccountDTO dto);
 
+    AccountDTO getAccountDetails(String id);
+
     List<AccountDTO> getAll();
 }

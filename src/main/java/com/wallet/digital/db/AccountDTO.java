@@ -1,12 +1,15 @@
 package com.wallet.digital.db;
 
+import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 public class AccountDTO {
 
     private String name;
-    private int id;
-    private int balance;
+    private UUID id;
+    private long balance;
+    private Date dateCreated;
 
     public String getName() {
         return name;
@@ -16,20 +19,28 @@ public class AccountDTO {
         this.name = name;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public int getBalance() {
+    public long getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(long balance) {
         this.balance = balance;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     @Override
@@ -37,13 +48,11 @@ public class AccountDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AccountDTO that = (AccountDTO) o;
-        return id == that.id &&
-                balance == that.balance &&
-                Objects.equals(name, that.name);
+        return id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, id, balance);
+        return Objects.hash(id);
     }
 }

@@ -1,20 +1,25 @@
 package com.wallet.digital.db.dao;
 
-import com.wallet.digital.api.AccountTO;
 import com.wallet.digital.db.AccountDTO;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class AccountMemoryDAO implements AccountDAO {
 
-    private Map<Integer, AccountDTO> accountMap = new HashMap<>();
+    private Map<UUID, AccountDTO> accountMap = new ConcurrentHashMap<>();
 
     public AccountDTO createAccount(AccountDTO dto) {
         accountMap.put(dto.getId(), dto);
         return dto;
+    }
+
+    @Override
+    public AccountDTO getAccountDetails(String id) {
+        return accountMap.get(UUID.fromString(id));
     }
 
     @Override
